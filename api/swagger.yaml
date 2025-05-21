@@ -1,0 +1,1724 @@
+openapi: 3.0.1
+info:
+  title: Public API - Development
+  description: Public API
+  version: v1
+servers:
+- url: /
+security:
+- oauth2:
+  - api
+paths:
+  /action/get-status:
+    get:
+      tags:
+      - Action
+      summary: Lấy trạng thái đơn hàng
+      parameters:
+      - name: transactionId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+  /instance/fake:
+    get:
+      tags:
+      - Instance
+      summary: Fake
+      parameters:
+      - name: transactionId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+  /instance/list:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách máy ảo
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstanceInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstanceInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstanceInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/detail:
+    get:
+      tags:
+      - Instance
+      summary: Lấy thông tin chi tiết của máy ảo
+      parameters:
+      - name: instanceId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/InstanceDetailInfo"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstanceDetailInfo"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/InstanceDetailInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/create:
+    post:
+      tags:
+      - Instance
+      summary: Khởi tạo máy ảo.
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstanceCreateModel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/InstanceCreateModel"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/InstanceCreateModel"
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /instance/resize:
+    post:
+      tags:
+      - Instance
+      summary: Điều chỉnh máy ảo.
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstanceResizeModel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/InstanceResizeModel"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/InstanceResizeModel"
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /instance/rebuild:
+    post:
+      tags:
+      - Instance
+      summary: Thay đổi hệ điều hành máy ảo
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstanceRebuildModel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/InstanceRebuildModel"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/InstanceRebuildModel"
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /instance/delete:
+    delete:
+      tags:
+      - Instance
+      summary: Xóa máy ảo
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /instance/edit:
+    put:
+      tags:
+      - Instance
+      summary: Thay đổi thông tin máy ảo (tên)
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstanceEditModel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/InstanceEditModel"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/InstanceEditModel"
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /instance/bundle-informations:
+    get:
+      tags:
+      - Instance
+      summary: Thông tin tài nguyên liên quan đến máy ảo
+      parameters:
+      - name: regionId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /instance/images:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách hệ điều hành
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImageInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImageInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ImageInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/gpus:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách loại GPU
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstanceGpuTypeInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstanceGpuTypeInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstanceGpuTypeInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/ip-publics:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách IP Public
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IPPublicInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IPPublicInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IPPublicInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/security-groups:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách Security Group
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SecurityGroupInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SecurityGroupInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SecurityGroupInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/vlans:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách VLAN Network
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VlanInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VlanInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VlanInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/vlan-ports:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách Port VLAN
+      parameters:
+      - name: vlanId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PortInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PortInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PortInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /instance/snapshots:
+    get:
+      tags:
+      - Instance
+      summary: Lấy danh sách VLAN Network
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SnapshotInfo"
+                x-content-type: text/plain
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SnapshotInfo"
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SnapshotInfo"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+      security:
+      - oauth2:
+        - all
+        - Public-api
+  /volume/create:
+    post:
+      tags:
+      - Volume
+      summary: Khởi tạo volume.
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VolumeCreateModel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/VolumeCreateModel"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/VolumeCreateModel"
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /volume/resize:
+    post:
+      tags:
+      - Volume
+      summary: Điều chỉnh máy ảo.
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VolumeResizeModel"
+          text/json:
+            schema:
+              $ref: "#/components/schemas/VolumeResizeModel"
+          application/*+json:
+            schema:
+              $ref: "#/components/schemas/VolumeResizeModel"
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /volume/delete/{id}:
+    delete:
+      tags:
+      - Volume
+      summary: Xóa volume.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /volume/create-init/{projectId}:
+    get:
+      tags:
+      - Volume
+      summary: Khởi tạo volume.
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "201":
+          description: Thao tác thành công
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+            text/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /vpc/list:
+    get:
+      tags:
+      - Vpc
+      summary: Lấy danh sách VPC
+      parameters:
+      - name: User-Root-Id
+        in: header
+        description: Id IAM User root
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: Project-Id
+        in: header
+        description: Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      - name: X-Project-Id
+        in: header
+        description: X-Project-Id
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+          nullable: true
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        code:
+          type: integer
+          format: int32
+          nullable: true
+        data:
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        errorCode:
+          type: string
+          nullable: true
+      additionalProperties: false
+      example:
+        code: 0
+        data: ""
+        success: true
+        errorCode: errorCode
+        message: message
+    IPPublicInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ""
+          format: int32
+        ipAddress:
+          type: string
+          description: ""
+          nullable: true
+        iPv6Address:
+          type: string
+          description: ""
+          nullable: true
+      additionalProperties: false
+      description: ""
+      example:
+        iPv6Address: iPv6Address
+        ipAddress: ipAddress
+        id: 0
+    ImageInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        versions:
+          type: array
+          nullable: true
+          items:
+            $ref: "#/components/schemas/ImageVersionInfo"
+      additionalProperties: false
+      example:
+        versions:
+        - name: name
+          id: 0
+        - name: name
+          id: 0
+        name: name
+    ImageVersionInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+      example:
+        name: name
+        id: 0
+    InstanceCreateModel:
+      required:
+      - instanceName
+      - vlanId
+      - volumeType
+      type: object
+      properties:
+        instanceCount:
+          type: integer
+          description: Số lượng máy ảo
+          format: int32
+        instanceName:
+          type: string
+          description: Tên máy ảo
+          nullable: true
+        instancePassword:
+          type: string
+          description: Mật khẩu máy ảo
+          nullable: true
+        keyPairId:
+          type: integer
+          description: ""
+          format: int32
+          nullable: true
+        imageId:
+          type: integer
+          description: Id hệ điều hành
+          format: int32
+        cpu:
+          type: integer
+          description: Cpu
+          format: int32
+        ram:
+          type: integer
+          description: Ram
+          format: int32
+        volumeSize:
+          type: integer
+          description: Dung lượng ổ root
+          format: int32
+        volumeType:
+          type: string
+          description: ssd hay hdd
+          nullable: true
+        volumeEncryption:
+          type: boolean
+          description: Mã hóa volume
+        gpuTypeId:
+          type: integer
+          description: Id loại Gpu
+          format: int32
+          nullable: true
+        gpuCount:
+          type: integer
+          description: Số lượng Gpu
+          format: int32
+          nullable: true
+        securityGroups:
+          type: array
+          description: Danh sách SG gắn vào máy ảo
+          nullable: true
+          items:
+            type: string
+        ipPublicId:
+          type: integer
+          description: Ip Public đã mua
+          format: int32
+          nullable: true
+        vlanId:
+          type: string
+          description: VLAN Id
+          nullable: true
+        portId:
+          type: string
+          description: Port của VLAN
+          nullable: true
+        snapshotId:
+          type: integer
+          description: ""
+          format: int32
+          nullable: true
+      additionalProperties: false
+      description: ""
+    InstanceDetailInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        cloudId:
+          type: string
+          nullable: true
+      additionalProperties: false
+      example:
+        cloudId: cloudId
+        name: name
+        id: 0
+    InstanceEditModel:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Id máy ảo sẽ điều chỉnh
+          format: int32
+        newImageId:
+          type: integer
+          description: Id hệ điều hành mới
+          format: int32
+      additionalProperties: false
+    InstanceGpuTypeInfo:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id loại GPU
+          format: int32
+        name:
+          type: string
+          description: Tên loại GPU
+          nullable: true
+      additionalProperties: false
+      description: Loại GPU
+      example:
+        name: name
+        id: 0
+    InstanceInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+      description: ""
+      example:
+        name: name
+        id: 0
+    InstanceRebuildModel:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Id máy ảo sẽ điều chỉnh
+          format: int32
+        newName:
+          type: string
+          description: Tên mới của máy ảo
+          nullable: true
+      additionalProperties: false
+    InstanceResizeModel:
+      type: object
+      properties:
+        instanceId:
+          type: integer
+          description: Id máy ảo sẽ điều chỉnh
+          format: int32
+        cpu:
+          type: integer
+          description: Cpu tăng thêm
+          format: int32
+          nullable: true
+        ram:
+          type: integer
+          description: Ram tăng thêm
+          format: int32
+          nullable: true
+        volumeSize:
+          type: integer
+          description: Dung lượng ổ root tăng thêmn
+          format: int32
+          nullable: true
+        gpuTypeId:
+          type: integer
+          description: Id loại Gpu tăng thêm
+          format: int32
+          nullable: true
+        gpuCount:
+          type: integer
+          description: Số lượng Gpu tăng thêm
+          format: int32
+          nullable: true
+      additionalProperties: false
+    PortInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        fixedIPs:
+          type: array
+          nullable: true
+          items:
+            type: string
+      additionalProperties: false
+      example:
+        fixedIPs:
+        - fixedIPs
+        - fixedIPs
+        id: id
+    SecurityGroupInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+      example:
+        name: name
+        description: description
+    SnapshotInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+      example:
+        name: name
+        id: 0
+    VlanInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        subnetAddressRequired:
+          type: string
+          nullable: true
+      additionalProperties: false
+      example:
+        subnetAddressRequired: subnetAddressRequired
+        name: name
+        id: id
+    VolumeCreateModel:
+      required:
+      - projectId
+      - volumeName
+      - volumeSize
+      - volumeType
+      type: object
+      properties:
+        projectId:
+          type: integer
+          description: Id dự án
+          format: int32
+        volumeName:
+          type: string
+          description: Tên máy ảo
+          nullable: true
+        volumeType:
+          type: string
+          nullable: true
+        volumeSize:
+          type: integer
+          format: int32
+        description:
+          type: string
+          nullable: true
+        iops:
+          type: integer
+          format: int32
+        createFromSnapshotId:
+          type: integer
+          format: int32
+          nullable: true
+        instanceToAttachId:
+          type: integer
+          format: int32
+          nullable: true
+        isMultiAttach:
+          type: boolean
+        isEncryption:
+          type: boolean
+      additionalProperties: false
+    VolumeResizeModel:
+      required:
+      - iops
+      - newSize
+      - projectId
+      - volumeId
+      type: object
+      properties:
+        volumeId:
+          type: integer
+          format: int32
+        newSize:
+          type: integer
+          format: int32
+        iops:
+          type: integer
+          format: int32
+        description:
+          type: string
+          nullable: true
+        projectId:
+          type: integer
+          format: int32
+        volumeName:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://localhost:1000/connect/authorize
+          tokenUrl: https://localhost:1000/connect/token
+          scopes:
+            all: All Scope
+            Public-api: Public API Scope
